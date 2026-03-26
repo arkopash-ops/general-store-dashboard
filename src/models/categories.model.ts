@@ -11,5 +11,7 @@ const CategorySchema = new Schema<CategoriesDocument>({
     description: { type: String },
 }, { timestamps: true });
 
-export default models.Category ||
+const categoriesModel = models.Category ||
     model<CategoriesDocument>("Category", CategorySchema);
+
+export default categoriesModel;
