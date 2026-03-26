@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import NavLinks from "@/ui/nav-links";
+import NavLinks from "@/ui/NavLinks";
 
 export const metadata: Metadata = {
   title: "Dashboard for General Store",
