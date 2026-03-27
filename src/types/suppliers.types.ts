@@ -35,3 +35,32 @@ export interface ISupplier {
 }
 
 export interface SuppliersDocument extends ISupplier, Document { }
+
+
+// for ui
+export interface Supplier {
+  _id: string;
+  supplier_name: string;
+  contact_number: string;
+  email?: string;
+  supplier_company: {
+    name: string;
+    address: {
+      street: string;
+      city: string;
+      state: string;
+      zipCode: string;
+      country: string;
+    };
+    contact: {
+      phone: string;
+      email?: string;
+    };
+    socialMedia?: {
+      instagram?: string;
+      facebook?: string;
+      twitter?: string;
+      linkedin?: string;
+    };
+  };
+}

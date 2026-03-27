@@ -2,7 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { HomeIcon, Squares2X2Icon } from "@heroicons/react/24/outline";
+import {
+  HomeIcon,
+  Squares2X2Icon,
+  UserIcon,
+} from "@heroicons/react/24/outline";
 
 const links = [
   {
@@ -14,6 +18,11 @@ const links = [
     name: "Categories",
     href: "/dashboard/categories",
     icon: Squares2X2Icon,
+  },
+  {
+    name: "Suppliers",
+    href: "/dashboard/suppliers",
+    icon: UserIcon,
   },
 ];
 

@@ -1,11 +1,8 @@
 import EditBtn from "../EditBtn";
 import DeleteBtn from "../DeleteBtn";
+import { Category } from "@/types/categories.types";
 
-interface Category {
-  _id: string;
-  category_type: string;
-  description?: string;
-}
+
 
 interface CategoryTableProps {
   categories: Category[];

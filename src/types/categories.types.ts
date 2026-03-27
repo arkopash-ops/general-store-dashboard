@@ -6,3 +6,11 @@ export interface ICategories {
 }
 
 export interface CategoriesDocument extends ICategories, Document { }
+
+
+// for ui
+export interface Category {
+  _id: string;
+  category_type: string;
+  description?: string;
+}

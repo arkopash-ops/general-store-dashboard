@@ -10,10 +10,12 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
+    "country-state-city": "^3.2.1",
     "mongoose": "^9.3.3",
     "next": "16.2.1",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "react-select": "^5.10.2"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

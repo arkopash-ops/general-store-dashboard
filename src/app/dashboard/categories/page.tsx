@@ -3,12 +3,7 @@
 import { useEffect, useState } from "react";
 import CategoryForm from "@/ui/categories/CategoryForm";
 import CategoryTable from "@/ui/categories/CategoryTable";
-
-interface Category {
-  _id: string;
-  category_type: string;
-  description?: string;
-}
+import { Category } from "@/types/categories.types";
 
 export default function CategoriesPage() {
   const [categories, setCategories] = useState<Category[]>([]);
