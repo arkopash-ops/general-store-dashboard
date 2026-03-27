@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectToDB } from "@/lib/db";
 import categoriesModel from "@/models/categories.model";
 
+// EDIT CATEGORIES
 export async function PUT(
     req: NextRequest,
     context: { params: Promise<{ id: string }> }
@@ -10,8 +11,6 @@ export async function PUT(
         await connectToDB();
 
         const { id } = await context.params;
-        console.log(id);
-
         if (!id) {
             return NextResponse.json(
                 { success: false, message: "Category ID is required" },
@@ -54,15 +53,20 @@ export async function PUT(
             );
         }
 
-        return NextResponse.json({ success: true, data: category });
+        return NextResponse.json({
+            success: true,
+            data: category
+        });
     } catch (error: unknown) {
         let message = "Internal server error";
         if (error instanceof Error) message = error.message;
 
-        return NextResponse.json({ success: false, message }, { status: 500 });
+        return NextResponse.json(
+            { success: false, message },
+            { status: 500 }
+        );
     }
 }
-
 
 
 // DELETE CATEGORIES
@@ -100,6 +104,9 @@ export async function DELETE(
         let message = "Internal server error";
         if (error instanceof Error) message = error.message;
 
-        return NextResponse.json({ success: false, message }, { status: 500 });
+        return NextResponse.json(
+            { success: false, message },
+            { status: 500 }
+        );
     }
 }
