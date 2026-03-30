@@ -4,79 +4,97 @@ import { NextRequest, NextResponse } from "next/server";
 
 // CREATE PRODUCT
 export async function POST(req: NextRequest) {
-    try {
-        await connectToDB();
+  try {
+    await connectToDB();
 
-        const body = await req.json();
+    const body = await req.json();
 
-        const {
-            product_name,
-            category_id,
-            unit_price,
-            stock_quantity,
-            supplier_id,
-            description
-        } = body;
+    const {
+      product_name,
+      category_id,
+      unit_price,
+      stock_quantity,
+      supplier_id,
+      description,
+    } = body;
 
-        if (!product_name) {
-            return NextResponse.json(
-                { success: false, message: "category_type is required" },
-                { status: 400 }
-            );
-        }
-
-        const existing = await productModel.findOne({ product_name });
-
-        if (existing) {
-            return NextResponse.json(
-                { success: false, message: "Product already exists" },
-                { status: 400 }
-            );
-        }
-
-        const product = await productModel.create({
-            product_name,
-            category_id,
-            unit_price,
-            stock_quantity,
-            supplier_id,
-            description
-        });
-
-        return NextResponse.json({
-            success: true,
-            data: product,
-        });
-    } catch (error: unknown) {
-        let message = "Internal server error";
-        if (error instanceof Error) message = error.message;
-
-        return NextResponse.json(
-            { success: false, message },
-            { status: 500 }
-        );
+    if (!product_name) {
+      return NextResponse.json(
+        { success: false, message: "category_type is required" },
+        { status: 400 }
+      );
     }
+
+    const existing = await productModel.findOne({ product_name });
+
+    if (existing) {
+      return NextResponse.json(
+        { success: false, message: "Product already exists" },
+        { status: 400 }
+      );
+    }
+
+    const createdProduct = await productModel.create({
+      product_name,
+      category_id,
+      unit_price,
+      stock_quantity,
+      supplier_id,
+      description,
+    });
+
+    const product = await productModel
+      .findById(createdProduct._id)
+      .populate({
+        path: "category_id",
+        select: "category_type"
+      })
+      .populate({
+        path: "supplier_id",
+        select: "supplier_name supplier_company.name",
+      });
+
+    return NextResponse.json({
+      success: true,
+      data: product,
+    });
+  } catch (error: unknown) {
+    let message = "Internal server error";
+    if (error instanceof Error) message = error.message;
+
+    return NextResponse.json(
+      { success: false, message },
+      { status: 500 }
+    );
+  }
 }
 
 
 // GET ALL PRODUCTS
 export async function GET() {
-    try {
-        await connectToDB();
+  try {
+    await connectToDB();
 
-        const products = await productModel.find().sort({ createdAt: -1 });
+    const products = await productModel
+      .find()
+      .populate({ path: "category_id", select: "category_type" })
+      .populate({
+        path: "supplier_id",
+        select: "supplier_name supplier_company.name",
+      })
+      .sort({ createdAt: -1 });
 
-        return NextResponse.json({
-            success: true,
-            data: products,
-        });
-    } catch (error: unknown) {
-        let message = "Internal server error";
-        if (error instanceof Error) message = error.message;
+    return NextResponse.json({
+      success: true,
+      data: products,
+    });
+  } catch (error: unknown) {
+    let message = "Internal server error";
+    if (error instanceof Error) message = error.message;
 
-        return NextResponse.json(
-            { success: false, message },
-            { status: 500 }
-        );
-    }
+    return NextResponse.json(
+      { success: false, message },
+      { status: 500 }
+    );
+  }
 }
